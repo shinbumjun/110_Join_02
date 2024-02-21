@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.feb.test.dao.MemberDao">
+	<!-- public int join(HashMap<String, String> params); -->
+	<!-- 
+		FirstID+LastID -> member_name DB칼럼
+		password-> passwd DB칼럼
+		Email -> email DB칼럼
+	 -->
+	<insert id="join" parameterType="java.util.HashMap">
+		INSERT INTO lecture.member (member_id, passwd, email, join_dtm)
+		VALUES(#{memberId}, #{passwd}, #{email}, to_char(now(), 'YYYYMMDDHH24MISS'))
+	</insert>
+	
+	<!--  
+		public boolean Emailcheck(String email);
+		SELECT COUNT(*) FROM lecture.member WHERE email = ?
+		0이상으로 반환되면 중복이다
+	-->
+	<select id="Emailcheck" parameterType="string" resultType="int">
+    	SELECT COUNT(*) FROM lecture.member WHERE email = #{email}
+	</select>
+
+</mapper>
